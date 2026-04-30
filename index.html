@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TruthLens</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<nav class="navbar">
+    <div class="logo">
+        <div class="logo-icon">📰</div>
+        <div>
+            <div class="logo-name">TruthLens</div>
+            <div class="navbar-tag">FAKE NEWS DETECTOR</div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="hero">
+        <h1>Detect Fake News with <span class="glow-text">AI Analysis</span></h1>
+        <p class="subtitle">
+            Analyze article credibility using semantic similarity, title comparison,
+            trusted sources, satire detection, and entity overlap.
+        </p>
+
+        <div class="input-section">
+            <input type="text" id="urlInput" placeholder="Paste article URL here">
+        </div>
+
+        <div class="button-group">
+            <button onclick="analyzeNews()">Analyze</button>
+            <button onclick="clearFields()">Clear</button>
+            <button onclick="quitApp()">Quit</button>
+        </div>
+    </div>
+
+    <div class="result-box">
+        <textarea id="resultOutput" readonly>Your results will appear here.</textarea>
+    </div>
+</div>
+
+<script>
+async function analyzeNews() {
+    const url = document.getElementById("urlInput").value;
+    const output = document.getElementById("resultOutput");
+
+    output.value = "🔍 Analyzing...";
+
+    const result = await window.pywebview.api.analyze(url);
+    output.value = result;
+}
+
+function clearFields() {
+    document.getElementById("urlInput").value = "";
+    document.getElementById("resultOutput").value = "Your results will appear here.";
+}
+
+async function quitApp() {
+    await window.pywebview.api.quit();
+}
+</script>
+
+</body>
+</html>
